@@ -8,8 +8,13 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
-    const user = await User.findById(req.user._id).select("-password");
-    res.send(user);
+    try {
+        const user = await User.findById(req.user._id).select("-password");
+        res.send(user);    
+    }
+    catch (ex) {
+        res.status(404).send("user is not found");
+    }
 });
 
 router.post("/", async (req, res) => {
