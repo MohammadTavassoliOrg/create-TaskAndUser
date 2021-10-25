@@ -1,4 +1,5 @@
 // file name => index
+const error = require("./routes/middleware/error");
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
@@ -23,6 +24,8 @@ app.use(express.json());
 app.use('/api/users', users);
 app.use("/api/auth", auth);
 app.use("/api/tasks", tasks);
+
+app.use(error)
 
 app.listen(port, host, () => {
   console.log(`Server is listening ${host}:${port}`);
