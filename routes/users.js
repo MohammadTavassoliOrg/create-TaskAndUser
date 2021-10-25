@@ -8,15 +8,9 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
-    try {
         const user = await User.findById(req.user._id).select("-password");
-        res.send(user);    
-    }
-    catch (ex) {
-        res.status(404).send("user is not found");
-    }
+        res.send(user);
 });
-
 router.post("/", async (req, res) => {
     const { error } = validateUser(req.body);
     if ( error ) return res.status(400).send(error.details[0].message);
