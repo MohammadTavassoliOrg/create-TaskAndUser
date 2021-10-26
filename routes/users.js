@@ -1,4 +1,3 @@
-const asyncMiddleware = require("./middleware/async")
 const auth = require("./middleware/auth");
 const admin = require("./middleware/admin")
 const generateAuthToken = require("./auth");
@@ -8,11 +7,11 @@ const {User, validateUser} = require("../models/user");
 const express = require("express");
 const router = express.Router();
 
-router.get("/", auth, asyncMiddleware(async (req, res) => {
+router.get("/", auth, async (req, res) => {
     const user = await User.findById(req.user._id).select("-password");
     res.send(user);   
-}));
-router.post("/", asyncMiddleware(async (req, res) => {
+});
+router.post("/", async (req, res) => {
     const { error } = validateUser(req.body);
     if ( error ) return res.status(400).send(error.details[0].message);
     let user = await User.findOne({ email: req.body.email });
@@ -23,8 +22,8 @@ router.post("/", asyncMiddleware(async (req, res) => {
     await user.save();
     const token = user.generateAuthToken();
     res.header("x-auth-token", token).send(_.pick(user, ["id", "name", "email"]));
-}));
-router.delete("/:id", [auth, admin], asyncMiddleware(async (req, res) => {
+});
+router.delete("/:id", [auth, admin], async (req, res) => {
     const removeUser = await User.findByIdAndRemove(req.params.id).select("-password");
 
     if (!removeUser) return res.status(404).send('The user with the given ID was not found.');
@@ -32,8 +31,8 @@ router.delete("/:id", [auth, admin], asyncMiddleware(async (req, res) => {
     if (removeUser.isAdmin === true) return res.status(400).send("this user is admin🗿");
   
     res.send(removeUser);
-}));
-router.put("/id", [auth, admin], asyncMiddleware(async (req, res) => {
+});
+router.put("/id", [auth, admin], async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
   
@@ -44,6 +43,6 @@ router.put("/id", [auth, admin], asyncMiddleware(async (req, res) => {
     if (!putUser) return res.status(404).send('The genre with the given ID was not found.');
     
     res.send(putUser);
-}));
+});
 
 module.exports = router;

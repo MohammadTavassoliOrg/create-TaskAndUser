@@ -1,18 +1,17 @@
 // file name => tasks
-const asyncMiddleware = require("./middleware/async")
 const {Task, validateTitle} = require("../models/task");
 const express = require('express');
 const auth = require("./middleware/auth");
 const router = express.Router();
 
-router.get("/", auth, asyncMiddleware(async (req, res) => {
+router.get("/", auth, async (req, res) => {
   const find_task = await Task.find({users: req.user._id});
   if (!find_task) return res.status(404).send("this thask is not defined🦍")
 
   res.status(200).send(find_task)
-}));
+});
 
-router.post('/', auth, asyncMiddleware(async (req, res) => {
+router.post('/', auth, async (req, res) => {
   const { error } = validateTitle(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   newtask = new Task({
@@ -23,7 +22,7 @@ router.post('/', auth, asyncMiddleware(async (req, res) => {
   await newtask.save(); 
   res.status(200).send(newtask);
   console.log(newtask.done);
-}));
+});
 
 module.exports = router;
 
