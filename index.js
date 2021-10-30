@@ -2,13 +2,9 @@
 require("winston-mongodb");
 const winston = require("winston");
 require("express-async-errors");
-const error = require("./routes/middleware/error");
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
-const users = require('./routes/users');
-const auth = require("./routes/auth");
-const tasks = require("./routes/tasks");
 const express = require('express');
 const app = express();
 require("./startup/routes")(app);
