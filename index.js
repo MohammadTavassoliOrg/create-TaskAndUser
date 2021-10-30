@@ -1,4 +1,5 @@
 // file name => index
+require("winston-mongodb");
 const winston = require("winston");
 require("express-async-errors");
 const error = require("./routes/middleware/error");
@@ -12,7 +13,9 @@ const express = require('express');
 const app = express();
 require("dotenv").config();
 
-winston.add(winston.transports.File, { __filename: "logfile.log" } );
+winston.add(winston.transports.File, { filename: "logfile.log" });
+winston.add(winston.transports.MongoDB, { db: "mongodb://localhost/vidly" });
+
 
 if (!process.env.jwtPrivateKey) {
   console.error("FATAL ERROR: jwtPrivateKey is not defined.");
