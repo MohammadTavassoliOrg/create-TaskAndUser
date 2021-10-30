@@ -13,13 +13,13 @@ const express = require('express');
 const app = express();
 require("dotenv").config();
 
-process.on("UncaughtExceptions", (ex) => {
+process.on("uncaughtException", (ex) => {
   console.log("WE GOT AN UNCAUGHT EXCEPTION");
   winston.error(ex.message, ex);
 });
 
 winston.add(winston.transports.File, { filename: "logfile.log" });
-winston.add(winston.transports.MongoDB, { db: "mongodb://localhost/vidly" });
+winston.add(winston.transports.MongoDB, { db: "mongodb://localhost/vidly", level: "info" });
 
 throw new Error("Somwthing failed during startup");
 
