@@ -13,9 +13,15 @@ const express = require('express');
 const app = express();
 require("dotenv").config();
 
+process.on("UncaughtExceptions", (ex) => {
+  console.log("WE GOT AN UNCAUGHT EXCEPTION");
+  winston.error(ex.message, ex);
+});
+
 winston.add(winston.transports.File, { filename: "logfile.log" });
 winston.add(winston.transports.MongoDB, { db: "mongodb://localhost/vidly" });
 
+throw new Error("Somwthing failed during startup")
 
 if (!process.env.jwtPrivateKey) {
   console.error("FATAL ERROR: jwtPrivateKey is not defined.");
