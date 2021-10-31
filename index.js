@@ -4,10 +4,10 @@ const winston = require("winston");
 require("express-async-errors");
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
-const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 require("./startup/routes")(app);
+require("./startup/db")();
 require("dotenv").config();
 
 // 0 means success diffrent mean failear
@@ -32,10 +32,6 @@ if (!process.env.jwtPrivateKey) {
 };
 let port = process.env.PORT;
 let host = process.env.HOST;
-
-mongoose.connect(`mongodb://${host}/vidly`)
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch(err => console.error('Could not connect to MongoDB...'));
 
 app.listen(port, host, () => {
   console.log(`Server is listening ${host}:${port}`);
