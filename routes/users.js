@@ -8,7 +8,6 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
-    throw new Error("Could not get the Users");
     const user = await User.findById(req.user._id).select("-password");
     res.send(user);   
 });

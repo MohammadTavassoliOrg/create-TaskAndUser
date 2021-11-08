@@ -1,5 +1,4 @@
 // file name => index
-// for test extention git lens
 const express = require('express');
 const winston = require("winston");
 const app = express();
