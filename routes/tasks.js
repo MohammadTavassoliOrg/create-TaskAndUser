@@ -5,7 +5,6 @@ const auth = require("./middleware/auth");
 const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
-  throw new Error("Could not get Tasks")
   const find_task = await Task.find({users: req.user._id});
   if (!find_task) return res.status(404).send("this thask is not defined🦍")
 
