@@ -5,3 +5,5 @@
 {"level":"info","message":"Connected to MongoDB...","timestamp":"2021-10-31T03:58:36.731Z"}
 {"level":"info","message":"Server is listening localhost:3000","timestamp":"2021-10-31T04:02:53.675Z"}
 {"level":"info","message":"Connected to MongoDB...","timestamp":"2021-10-31T04:02:55.717Z"}
+{"level":"info","message":"Server is listening localhost:3000","timestamp":"2021-11-08T08:12:47.975Z"}
+{"level":"info","message":"Connected to MongoDB...","timestamp":"2021-11-08T08:12:50.058Z"}
